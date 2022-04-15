@@ -8,6 +8,8 @@ using namespace std;
 class Graph
 {
   int numVertices;
+
+public:
   list<int> *adjLists;
   bool *visited;
 
@@ -46,18 +48,18 @@ void Graph::addEdge(int src, int dest)
 // DFS algorithm
 void Graph::DFS(int vertex)
 {
-  visited[vertex] = true;
-
   list<int> adjList = adjLists[vertex];
 
-  cout << vertex << " ";
+  adjList.push_front(vertex);
+  adjList.sort();
 
-  list<int>::iterator i;
-  for (i = adjList.begin(); i != adjList.end(); ++i)
+  for (list<int>::iterator it = adjList.begin(); it != adjList.end(); it++)
   {
-    if (visited[*i] == false)
+    if (!visited[*it])
     {
-      DFS(*i);
+      visited[*it] = true;
+      cout << *it << " ";
+      DFS(*it);
     }
   }
 }
@@ -70,7 +72,7 @@ void Graph::DFS_ALL()
       cout << j << " ";
     visited[j] = true;
     list<int> adjList = adjLists[j];
-    // cout << *adjList.begin() << " ";
+
     if (*adjList.begin() == 0)
     {
       cout << "\n";
@@ -102,18 +104,18 @@ int main()
       Graph g(n);
       g.clearVisited();
 
-      for (int i = 0; i < n/2; i++)
+      for (int i = 0; i < n / 2; i++)
       {
         getline(cin, input);
         int src = stoi(input.substr(0, input.find(" ")));
         int dest = stoi(input.substr(input.find(" ") + 1));
         g.addEdge(src, dest);
       }
+
       g.DFS_ALL();
       break;
     }
   }
-
 
   return 0;
 }
