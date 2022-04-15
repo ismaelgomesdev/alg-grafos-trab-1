@@ -43,6 +43,14 @@ void Graph::addEdge(int src, int dest)
 {
   adjLists[src].push_front(dest);
   adjLists[dest].push_front(src);
+
+  //itera sobre adjLists[src] e imprime os vertices adjacentes
+
+  list<int>::iterator i;
+  for (i = adjLists[src].begin(); i != adjLists[src].end(); ++i)
+  {
+    
+  }
 }
 
 // DFS algorithm
@@ -52,6 +60,7 @@ void Graph::DFS(int vertex)
 
   adjList.push_front(vertex);
   adjList.sort();
+  
 
   for (list<int>::iterator it = adjList.begin(); it != adjList.end(); it++)
   {
@@ -104,9 +113,10 @@ int main()
       Graph g(n);
       g.clearVisited();
 
-      for (int i = 0; i < n / 2; i++)
+      while (getline(cin, input))
       {
-        getline(cin, input);
+        if (input.empty())
+          break;
         int src = stoi(input.substr(0, input.find(" ")));
         int dest = stoi(input.substr(input.find(" ") + 1));
         g.addEdge(src, dest);
