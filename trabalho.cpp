@@ -12,6 +12,7 @@ class Graph
 public:
   list<int> *adjLists;
   bool *visited;
+  list<int> group;
 
 public:
   Graph(int V);
@@ -43,14 +44,6 @@ void Graph::addEdge(int src, int dest)
 {
   adjLists[src].push_front(dest);
   adjLists[dest].push_front(src);
-
-  //itera sobre adjLists[src] e imprime os vertices adjacentes
-
-  list<int>::iterator i;
-  for (i = adjLists[src].begin(); i != adjLists[src].end(); ++i)
-  {
-    
-  }
 }
 
 // DFS algorithm
@@ -67,7 +60,7 @@ void Graph::DFS(int vertex)
     if (!visited[*it])
     {
       visited[*it] = true;
-      cout << *it << " ";
+      group.push_front(*it);
       DFS(*it);
     }
   }
@@ -92,6 +85,12 @@ void Graph::DFS_ALL()
       if (!visited[*i])
       {
         DFS(*i);
+        group.sort();
+        for (list<int>::iterator it = group.begin(); it != group.end(); it++)
+        {
+          cout << *it << " ";
+        }
+        group.clear();
         cout << "\n";
       }
     }
